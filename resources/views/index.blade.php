@@ -10,28 +10,49 @@
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Daftar Barang Unib Store</h1>
+
+        <!-- Tombol Tambah Barang -->
+        <div class="mb-3">
+            <a href="{{ route('barang.create') }}" class="btn btn-success">Tambah Barang</a>
+        </div>
+
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>no</th>
-                    <th>nama_barang</th>
-                    <th>kategori</th>
-                    <th>deskripsi</th>
-                    <th>harga</th>
-                    <th>stok</th>
-                    <th>status</th>
+                    <th>No</th>
+                    <th>Nama Barang</th>
+                    <th>Kategori</th>
+                    <th>Deskripsi</th>
+                    <th>Harga (Rp)</th>
+                    <th>Stok</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data as $row)
+                @foreach($data as $row)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $row->nama_barang }}</td>
                     <td>{{ $row->kategori }}</td>
                     <td>{{ $row->deskripsi }}</td>
-                    <td>{{ number_format($row->harga, 3, ',', '.') }}</td> <!-- Format harga -->
+                    <td>{{ number_format($row->harga, 3, ',', '.') }}</td> <!-- Format harga dengan pemisah ribuan -->
                     <td>{{ $row->stok }}</td>
                     <td>{{ $row->status }}</td>
+                    <td>
+                        <a href="{{ route('barang.edit', $row->id) }}" class="btn btn-warning">Edit</a>
+                        <form action="{{ route('barang.destroy', $row->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?')">Hapus</button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

@@ -28,3 +28,15 @@ Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.
 
 // Rute untuk menyimpan barang baru
 Route::post('/barang', [BarangController::class, 'store'])->name('barang.store');
+
+// Rute untuk menampilkan form edit barang
+Route::get('/barang/{id}/edit', [BarangController::class, 'edit'])->name('barang.edit');
+
+// Rute untuk memperbarui barang
+Route::put('/barang/{id}', [BarangController::class, 'update'])->name('barang.update');
+
+// Rute untuk menghapus barang
+Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
+
+// Rute untuk mengelola sumber daya barang
+Route::resource('barang', Barangcontroller::class);
