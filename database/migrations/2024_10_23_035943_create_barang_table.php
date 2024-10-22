@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('barang', function (Blueprint $table) {
             $table->id(); // Kolom ID sebagai primary key
             $table->string('nama_barang', 50); // Nama produk dengan panjang maksimal 50 karakter
-            $table->string('kategori'); // Kategori produk (misalnya: pakaian, aksesori, dll.)
+            //$table->string('kategori'); // Kategori produk (misalnya: pakaian, aksesori, dll.)
             $table->text('deskripsi'); // Deskripsi produk
             $table->decimal('harga', 10, 2); // Harga produk dengan 2 digit desimal
             $table->integer('stok'); // Stok produk
             $table->enum('status', ["tersedia", "tidak tersedia"]); // Status produk
+            // Foreign key untuk Kategori
+            $table->foreignId('kategori_id')->constrained('kategoris')->onDelete('cascade');
             $table->timestamps(); // Kolom untuk mencatat waktu dibuat dan diperbarui
         });        
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('barang');
+        Schema::dropIfExists('barangs');
     }
 };
